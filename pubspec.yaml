@@ -27,6 +27,7 @@ dependencies:
   provider: ^6.1.2
   shared_preferences: ^2.3.3
   webview_flutter: ^4.10.0
+  share_plus: ^10.1.2
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
   fonts:
     - family: Merriweather
       fonts:
+        - asset: assets/fonts/Merriweather-Regular.ttf
         - asset: assets/fonts/Merriweather-Bold.ttf
           weight: 700
   #   - family: Trajan Pro

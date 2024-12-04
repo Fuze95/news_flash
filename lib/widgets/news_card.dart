@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../models/article.dart';
 import '../providers/news_provider.dart';
 import '../screens/article_detail_screen.dart';
@@ -9,11 +10,18 @@ class NewsCard extends StatelessWidget {
 
   const NewsCard({Key? key, required this.article}) : super(key: key);
 
+  void _shareArticle() {
+    Share.share(
+      '${article.title}\n\nRead more: ${article.url}',
+      subject: article.title,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(8),
-      child: InkWell( // Added InkWell for tap effect
+      child: InkWell(
         onTap: () {
           Navigator.push(
             context,
@@ -59,20 +67,31 @@ class NewsCard extends StatelessWidget {
                         article.source,
                         style: const TextStyle(color: Colors.grey),
                       ),
-                      Consumer<NewsProvider>(
-                        builder: (context, newsProvider, child) {
-                          final isSaved = newsProvider.savedArticles
-                              .any((a) => a.url == article.url);
-                          return IconButton(
-                            icon: Icon(
-                              isSaved ? Icons.bookmark : Icons.bookmark_border,
-                              color: Theme.of(context).primaryColor,
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.share,
+                              color: Colors.grey,
                             ),
-                            onPressed: () {
-                              newsProvider.toggleSavedArticle(article);
+                            onPressed: _shareArticle,
+                          ),
+                          Consumer<NewsProvider>(
+                            builder: (context, newsProvider, child) {
+                              final isSaved = newsProvider.savedArticles
+                                  .any((a) => a.url == article.url);
+                              return IconButton(
+                                icon: Icon(
+                                  isSaved ? Icons.bookmark : Icons.bookmark_border,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                onPressed: () {
+                                  newsProvider.toggleSavedArticle(article);
+                                },
+                              );
                             },
-                          );
-                        },
+                          ),
+                        ],
                       ),
                     ],
                   ),

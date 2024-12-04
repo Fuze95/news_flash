@@ -34,26 +34,38 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).primaryColor,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Saved'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Divider(
+            height: 1,
+            thickness: 1,
+          ),
+          BottomNavigationBar(
+            currentIndex: _currentIndex,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: Theme.of(context).primaryColor,
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Saved'),
+              BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+              BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+            ],
+            onTap: (index) {
+              if (index == 0 && _currentIndex != 0) {
+                context.read<NewsProvider>().resetToHomeFeed();
+              }
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
         ],
-        onTap: (index) {
-          if (index == 0 && _currentIndex != 0) {
-            context.read<NewsProvider>().resetToHomeFeed();
-          }
-          setState(() {
-            _currentIndex = index;
-          });
-        },
       ),
     );
   }
