@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Article {
   final String title;
   final String description;
@@ -16,14 +18,28 @@ class Article {
   });
 
   factory Article.fromJson(Map<String, dynamic> json) {
-    return Article(
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      url: json['url'] ?? '',
-      urlToImage: json['urlToImage'] ?? '',
-      publishedAt: json['publishedAt'] ?? '',
-      source: json['source']['name'] ?? '',
-    );
+    try {
+      return Article(
+        title: json['title']?.toString() ?? '',
+        description: json['description']?.toString() ?? '',
+        url: json['url']?.toString() ?? '',
+        urlToImage: json['urlToImage']?.toString() ?? '',
+        publishedAt: json['publishedAt']?.toString() ?? '',
+        source: json['source'] is Map
+            ? json['source']['name']?.toString() ?? ''
+            : json['source']?.toString() ?? '',
+      );
+    } catch (e) {
+      debugPrint('Error parsing article: $e');
+      return Article(
+        title: '',
+        description: '',
+        url: '',
+        urlToImage: '',
+        publishedAt: '',
+        source: '',
+      );
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -35,5 +51,10 @@ class Article {
       'publishedAt': publishedAt,
       'source': source,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Article{title: $title, url: $url, source: $source}';
   }
 }
