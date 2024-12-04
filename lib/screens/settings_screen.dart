@@ -46,8 +46,8 @@ class SettingsScreen extends StatelessWidget {
               const Divider(height: 1),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  children: const [
+                child: const Column(
+                  children: [
                     Text(
                       'News Flash',
                       style: TextStyle(
@@ -74,7 +74,7 @@ class SettingsScreen extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(height: 8), // Extra padding at bottom for safety
+                    SizedBox(height: 8),
                   ],
                 ),
               ),
