@@ -9,6 +9,7 @@ class NewsProvider with ChangeNotifier {
   List<Article> _savedArticles = [];
   String _selectedCategory = 'general';
   bool _isDarkMode = false;
+  static const String _darkModeKey = 'isDarkMode';
   String? _error;
   bool _isLoading = false;
   static const String API_KEY = 'a3cbe3d1aef04332a6d4cfe900988a1f';
@@ -174,17 +175,37 @@ class NewsProvider with ChangeNotifier {
     }
   }
 
-  void toggleDarkMode() {
-    _isDarkMode = !_isDarkMode;
-    notifyListeners();
+  Future<void> toggleDarkMode() async {
+    try {
+      _isDarkMode = !_isDarkMode;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_darkModeKey, _isDarkMode);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error saving dark mode setting: $e');
+      // Revert the change if saving fails
+      _isDarkMode = !_isDarkMode;
+      notifyListeners();
+    }
   }
 
   void clearError() {
     _setError(null);
   }
 
+  Future<void> _loadDarkModeSetting() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _isDarkMode = prefs.getBool(_darkModeKey) ?? false;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error loading dark mode setting: $e');
+    }
+  }
+
   // Initialize saved articles when the provider is created
   NewsProvider() {
     loadSavedArticles();
+    _loadDarkModeSetting();
   }
 }

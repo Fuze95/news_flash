@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'main_screen.dart';
-import 'package:provider/provider.dart';
-import '../providers/news_provider.dart';  // Fixed import path
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -70,8 +68,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 const Text(
                   'Loading...',
                   style: TextStyle(
+                    fontFamily: 'Merriweather',
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
+                    color: Color(0xFFA9A9A9),
                   ),
                 ),
               ],
