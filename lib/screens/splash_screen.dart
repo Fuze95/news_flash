@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'home_screen.dart';
+import 'main_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/news_provider.dart';  // Fixed import path
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -29,7 +31,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         _controller.dispose();
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(
+            builder: (context) => const MainScreen(),
+          ),
         );
       },
     );
@@ -50,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/nf_logo.png',
+              'assets/images/nf_logo.png',
               width: 200,
               height: 200,
             ),
