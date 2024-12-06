@@ -41,7 +41,7 @@ class SettingsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               const Divider(height: 1),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
