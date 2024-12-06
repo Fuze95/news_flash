@@ -174,7 +174,7 @@ class NewsProvider with ChangeNotifier {
       _setLoading(false);
     }
   }
-
+//DarkMode save
   Future<void> toggleDarkMode() async {
     try {
       _isDarkMode = !_isDarkMode;
@@ -183,7 +183,6 @@ class NewsProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       debugPrint('Error saving dark mode setting: $e');
-      // Revert the change if saving fails
       _isDarkMode = !_isDarkMode;
       notifyListeners();
     }
@@ -203,7 +202,7 @@ class NewsProvider with ChangeNotifier {
     }
   }
 
-  // Initialize saved articles when the provider is created
+  // Initialize saved articles and DarkMode when the provider is created
   NewsProvider() {
     loadSavedArticles();
     _loadDarkModeSetting();
