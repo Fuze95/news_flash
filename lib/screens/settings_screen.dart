@@ -41,8 +41,7 @@ class SettingsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // Company Info at bottom
+              
               const Divider(height: 1),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
