@@ -35,7 +35,7 @@ class NewsProvider with ChangeNotifier {
       _selectedCategory = 'general';
       await fetchArticles();
     } catch (e) {
-      debugPrint('Error resetting home feed: $e');
+      //debugPrint('Error resetting home feed: $e');
       _setError('Failed to reset home feed: $e');
     }
   }
@@ -52,7 +52,7 @@ class NewsProvider with ChangeNotifier {
         url = 'https://newsapi.org/v2/everything?q=$query&apiKey=$API_KEY';
       }
 
-      debugPrint('Fetching articles from: $url');
+      //debugPrint('Fetching articles from: $url');
 
       final response = await http.get(Uri.parse(url)).timeout(
         const Duration(seconds: 10),
@@ -61,7 +61,7 @@ class NewsProvider with ChangeNotifier {
         },
       );
 
-      debugPrint('API Response Status Code: ${response.statusCode}');
+      //debugPrint('API Response Status Code: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -96,7 +96,7 @@ class NewsProvider with ChangeNotifier {
         throw Exception('Failed to load news: Status ${response.statusCode}');
       }
     } catch (e) {
-      debugPrint('Error fetching articles: $e');
+      //debugPrint('Error fetching articles: $e');
       _setError(e.toString());
       _articles = [];
     } finally {
@@ -110,7 +110,7 @@ class NewsProvider with ChangeNotifier {
       _selectedCategory = category;
       await fetchArticles();
     } catch (e) {
-      debugPrint('Error setting category: $e');
+      //debugPrint('Error setting category: $e');
       _setError('Failed to set category: $e');
     }
   }
@@ -127,7 +127,7 @@ class NewsProvider with ChangeNotifier {
             Map<String, dynamic> savedArticle = json.decode(a);
             return savedArticle['url'] == article.url;
           } catch (e) {
-            debugPrint('Error parsing saved article during removal: $e');
+            //debugPrint('Error parsing saved article during removal: $e');
             return false;
           }
         });
@@ -139,7 +139,7 @@ class NewsProvider with ChangeNotifier {
       await prefs.setStringList('savedArticles', savedArticles);
       notifyListeners();
     } catch (e) {
-      debugPrint('Error toggling saved article: $e');
+      //debugPrint('Error toggling saved article: $e');
       _setError('Failed to save article: $e');
     }
   }
@@ -155,7 +155,7 @@ class NewsProvider with ChangeNotifier {
           Map<String, dynamic> json = jsonDecode(articleString);
           return Article.fromJson(json);
         } catch (e) {
-          debugPrint('Error parsing saved article: $e');
+          //debugPrint('Error parsing saved article: $e');
           return null;
         }
       }).whereType<Article>().toList();
@@ -167,7 +167,7 @@ class NewsProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      debugPrint('Error loading saved articles: $e');
+      //debugPrint('Error loading saved articles: $e');
       _setError('Failed to load saved articles: $e');
       _savedArticles = [];
     } finally {
@@ -182,7 +182,7 @@ class NewsProvider with ChangeNotifier {
       await prefs.setBool(_darkModeKey, _isDarkMode);
       notifyListeners();
     } catch (e) {
-      debugPrint('Error saving dark mode setting: $e');
+      //debugPrint('Error saving dark mode setting: $e');
       _isDarkMode = !_isDarkMode;
       notifyListeners();
     }
@@ -198,7 +198,7 @@ class NewsProvider with ChangeNotifier {
       _isDarkMode = prefs.getBool(_darkModeKey) ?? false;
       notifyListeners();
     } catch (e) {
-      debugPrint('Error loading dark mode setting: $e');
+      //debugPrint('Error loading dark mode setting: $e');
     }
   }
 
